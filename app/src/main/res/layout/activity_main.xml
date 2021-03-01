@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@android:color/white"
+    >
+    <android.support.design.widget.TabLayout
+        android:layout_width="match_parent"
+        app:tabGravity="fill"
+        app:tabIndicatorColor="@android:color/holo_blue_dark"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="@android:color/holo_blue_dark"
+        app:tabTextColor="@android:color/black"
+        android:id="@+id/allplayview_midd_tab"
+        android:layout_height="wrap_content">
+    </android.support.design.widget.TabLayout>
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:id="@+id/main_wait_pb"
+        />
+    <android.support.v4.view.ViewPager
+        android:id="@+id/allplayview_midd_vp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/allplayview_midd_tab"
+        android:layout_above="@+id/playview_bottom_tab"/>
+
+    <FrameLayout
+        android:id="@+id/main_frame_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/playview_bottom_tab"/>
+
+    <LinearLayout
+        android:id="@+id/playview_bottom_tab"
+        android:layout_width="match_parent"
+        android:layout_height="53dp"
+        android:layout_alignParentBottom="true"
+        android:gravity="bottom"
+        android:background="@color/holo_blue_dark"
+        android:orientation="horizontal">
+
+        <com.tw.music.widget.CircleImageView
+            android:id="@+id/playview_bottom_icon"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_weight="0.5"
+            android:onClick="onPlaylistClick"
+            android:src="@drawable/ic_launcher"
+            />
+        <TextView
+            android:id="@+id/playview_bottom_music_info"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:ellipsize="marquee"
+            android:gravity="center"
+            android:layout_weight="3"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:onClick="onPlaylistClick"
+            android:singleLine="true" />
+
+        <LinearLayout
+            android:id="@+id/playview_bottom"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2.5"
+            android:gravity="center">
+            <ImageView
+                android:id="@+id/playview_bottom_prev"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:visibility="gone"
+                android:onClick="onPlaylistClick"
+                android:src="@drawable/selector_btn_prev" />
+            <ImageView
+                android:id="@+id/playview_bottom_pp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="onPlaylistClick"
+                android:src="@drawable/selector_btn_music_pp" />
+
+            <ImageView
+                android:id="@+id/playview_bottom_next"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="onPlaylistClick"
+                android:src="@drawable/selector_btn_next" />
+
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

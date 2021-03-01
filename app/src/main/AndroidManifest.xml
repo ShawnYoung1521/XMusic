@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.tw.music"
+    coreApp="true">
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FORCE_STOP_PACKAGES"
+        tools:ignore="ProtectedPermissions" />
+
+    <application
+        android:name=".Ap"
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:persistent="true"
+        android:requestLegacyExternalStorage="true"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:theme="@style/AppTheme">
+        <activity android:name=".MusicActivity"
+            android:exported="true"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".MusicPlayViewActivity"
+            android:launchMode="singleTask"/>
+        <service android:name=".MusicService"
+            android:persistent="true"
+            android:priority="1000" />
+        <activity android:name="cn.xy.library.util.permissions.UtilsTransActivity"/>
+    </application>
+</manifest>

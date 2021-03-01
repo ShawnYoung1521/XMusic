@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="210dp"
+    android:id="@+id/tab_music_view"
+    android:gravity="center">
+
+    <RelativeLayout
+        android:layout_width="341dp"
+        android:layout_height="210dp"
+        android:background="@drawable/selector_grid_item"
+        >
+        <ImageView
+            android:id="@+id/item_album_bg"
+            android:layout_width="267dp"
+            android:layout_height="154dp"
+            android:layout_marginTop="20dp"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/item_album_bg" />
+
+        <ImageView
+            android:id="@+id/tab_music_icon"
+            android:layout_width="142dp"
+            android:layout_height="142dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginLeft="80dp"
+            />
+
+        <TextView
+            android:id="@+id/tab_music_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            android:layout_below="@+id/item_album_bg"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:textSize="15dp"
+            android:singleLine="true"
+            android:layout_marginTop="6dp"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            />
+        <ImageView
+            android:id="@+id/music_isplaying"
+            android:layout_width="18dp"
+            android:layout_height="23dp"
+            android:visibility="gone"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:src="@drawable/playing"/>
+    </RelativeLayout>
+</LinearLayout>

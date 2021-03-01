@@ -1,0 +1,6 @@
+include ':library_lrc'
+include ':app', ':library_spectrum', 'XVideo'
+include ':XMusic', ':library_swipeback'
+include ':library_media'
+include ':app'
+rootProject.name='XMusic'

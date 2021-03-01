@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:id="@+id/spuare_view"
+    android:clickable="true"
+    android:orientation="horizontal"
+    tools:ignore="MissingDefaultResource">
+
+    <cn.xy.spectrum.view.CircleRoundView
+        android:id="@+id/circleRoundView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
+    <Switch
+        android:id="@+id/switch_horizontalEnergyView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="横向能量条"
+        android:visibility="gone"
+        android:textColor="@color/colorAccent" />
+
+    <cn.xy.spectrum.view.HorizontalEnergyView
+        android:id="@+id/horizontalEnergyView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
+    <Switch
+        android:id="@+id/switch_siriView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="人工智障Siri"
+        android:visibility="gone"
+        android:textColor="@color/colorAccent" />
+
+    <cn.xy.spectrum.view.SiriView
+        android:id="@+id/siriView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
+
+    <Switch
+        android:id="@+id/switch_slip_ball"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="伸缩球"
+        android:visibility="gone"
+        android:textColor="@color/colorAccent" />
+
+<!--    <cn.xy.spectrum.view.SlipBallView
+        android:id="@+id/slipBall"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginTop="10dp" />-->
+
+    <Switch
+        android:id="@+id/switch_hexagramView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="六芒星"
+        android:visibility="gone"
+        android:textColor="@color/colorAccent" />
+
+    <cn.xy.spectrum.view.HexagramView
+        android:id="@+id/hexagramView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
+    <Switch
+        android:id="@+id/switch_columnar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="柱状"
+        android:visibility="gone"
+        android:textColor="@color/colorAccent" />
+
+    <cn.xy.spectrum.view.ColumnarView
+        android:id="@+id/columnar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
+    <Switch
+        android:id="@+id/switch_besselView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="贝塞尔"
+        android:visibility="gone"
+        android:textColor="@color/colorAccent" />
+
+    <cn.xy.spectrum.view.BesselView
+        android:id="@+id/besselView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
+    <Switch
+        android:id="@+id/switch_aiVoice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="仿AI语音"
+        android:visibility="gone"
+        android:textColor="@color/colorAccent" />
+
+    <cn.xy.spectrum.view.AiVoiceView
+        android:id="@+id/aiVoice"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
+
+    <Switch
+        android:id="@+id/switch_waveform"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="声波"
+        android:visibility="gone"
+        android:textColor="@color/colorAccent" />
+
+    <cn.xy.spectrum.view.WaveformView
+        android:id="@+id/waveform"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
+
+    <Switch
+        android:id="@+id/switch_circleRoundView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="水波扩散"
+        android:visibility="gone"
+        android:textColor="@color/colorAccent" />
+
+
+    <cn.xy.spectrum.view.SpeedometerView
+        android:id="@+id/speedometerView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"/>
+
+    <Switch
+        android:id="@+id/switch_rotatingCircle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="旋转头像"
+        android:visibility="gone"
+        android:textColor="@color/colorAccent" />
+
+<!--    <cn.xy.spectrum.view.RotatingCircleView
+        android:id="@+id/rotatingCircle"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginTop="10dp" />-->
+
+    <Switch
+        android:id="@+id/switch_gridPointView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="随机棋盘"
+        android:visibility="gone"
+        android:textColor="@color/colorAccent" />
+
+    <cn.xy.spectrum.view.GridPointView
+        android:id="@+id/gridPointView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:layout_marginTop="10dp" />
+
+    <ImageView
+        android:id="@+id/car_effect_driving"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="center"
+        android:src="@drawable/car_effect_driving_1"
+        android:layout_centerInParent="true"
+        />
+
+</RelativeLayout>
