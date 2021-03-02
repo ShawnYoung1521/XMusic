@@ -7,6 +7,7 @@ import com.xy.media_lib.bean.ArtistMedia;
 import com.xy.media_lib.bean.LMedia;
 import com.xy.media_lib.bean.PathMedia;
 import java.util.ArrayList;
+import java.util.Map;
 
 public interface MusicView extends BaseView {
 
@@ -20,6 +21,8 @@ public interface MusicView extends BaseView {
         void onCurrPlayMedia(LMedia media);
         /**用于传输正在播放的歌曲列表数据，用于更新播放列表数据*/
         void onPlayList(ArrayList<LMedia> MusicList);
+        /**用于频谱**/
+        void onMediaPlay(MediaPlayer mediaPlayer);
     }
 
     /**启动界面**/
@@ -29,7 +32,8 @@ public interface MusicView extends BaseView {
         /**用于更新正在播放的音乐的进度/播放状态**/
         void onPlayState(boolean isPlaying);
         void onMediaList(ArrayList<LMedia> ALLMusicList);
-
+        void success();
+        void failed();
     }
 
     /**一级列表界面**/
@@ -46,12 +50,11 @@ public interface MusicView extends BaseView {
         void onShowMusicListMedias(ArrayList<LMedia> MusicList,String title,LMedia CurrPlayMedia,boolean isPlayingTag);
     }
 
-    interface VisualizerAblum extends MusicView{
+    /*歌词*/
+    interface LrcAblum extends MusicView{
         /**用于传输正在播放的歌手信息的数据，用于更新UI等操作*/
         void onCurrPlayMedia(LMedia media);
         /**用于更新正在播放的音乐的进度/播放状态**/
         void onPlayState(boolean isPlaying,int CurrentPosition,int Duration);
-        /**用于频谱**/
-        void onMediaPlay(MediaPlayer mediaPlayer);
     }
 }

@@ -7,7 +7,7 @@
     android:id="@+id/playlist_layout"
     android:background="@color/snow2">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:gravity="center_vertical"
@@ -26,9 +26,11 @@
             android:id="@+id/playlist_delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
             android:src="@drawable/selector_btn_playview_delete"
             />
-    </LinearLayout>
+    </RelativeLayout>
 
     <ImageView
         android:layout_width="match_parent"

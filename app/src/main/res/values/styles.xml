@@ -5,8 +5,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowBackground">@color/holo_blue_dark</item>
     </style>
     <style name="pop_window_anim"  parent="android:Animation">
         <item name="android:windowEnterAnimation">@anim/pop_fade_in</item>

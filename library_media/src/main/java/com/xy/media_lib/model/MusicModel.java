@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import cn.xy.library.XApp;
+import cn.xy.library.util.log.XLog;
 
 public class MusicModel extends BaseModel {
 
@@ -146,19 +147,22 @@ public class MusicModel extends BaseModel {
     /*end*/
 
     /**
-     * VisualizerAblum
+     * lrc
      */
-    private MusicView.VisualizerAblum  visualizerAblumview;
-    public void BindVisualizerAblumView(MusicView.VisualizerAblum  view){
-        visualizerAblumview = view;
+    private MusicView.LrcAblum  lrcview;
+    public void BindVisualizerAblumView(MusicView.LrcAblum  view){
+        lrcview = view;
     }
     public void unBindVisualizerAblumView(){
-        visualizerAblumview = null;
+        lrcview = null;
     }
     public void getVisualizerAblumData(){
-        if (visualizerAblumview != null){
-            visualizerAblumview.onCurrPlayMedia(CurrPlayMedia);
-            visualizerAblumview.onMediaPlay(getMediaPlayer());
+        if (lrcview != null){
+            lrcview.onCurrPlayMedia(CurrPlayMedia);
+        }
+        if (playview != null){
+            playview.onCurrPlayMedia(CurrPlayMedia);
+            playview.onMediaPlay(getMediaPlayer());
         }
     }
     /*end*/
@@ -253,25 +257,26 @@ public class MusicModel extends BaseModel {
     public MediaPlayer getMediaPlayer(){
         if (mMediaPlayer == null){
             mMediaPlayer = new MediaPlayer();
-            mMediaPlayer.setOnErrorListener(new MediaPlayer.OnErrorListener() {
-                @Override
-                public boolean onError(MediaPlayer mp, int what, int extra) {
-                    return true;
-                }
-            });
-            mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                @Override
-                public void onCompletion(MediaPlayer mediaPlayer) {
-                    next();
-                }
-            });
-            mMediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                @Override
-                public void onPrepared(MediaPlayer mediaPlayer) {
-                    start();
-                }
-            });
         }
+        mMediaPlayer.setLooping(false);
+        mMediaPlayer.setOnErrorListener(new MediaPlayer.OnErrorListener() {
+            @Override
+            public boolean onError(MediaPlayer mp, int what, int extra) {
+                return true;
+            }
+        });
+        mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mediaPlayer) {
+                next();
+            }
+        });
+        mMediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mediaPlayer) {
+                start();
+            }
+        });
         return mMediaPlayer;
     }
 
@@ -338,8 +343,8 @@ public class MusicModel extends BaseModel {
     }
 
     public final void clear() {
-        if (visualizerAblumview != null){
-            visualizerAblumview = null;
+        if (lrcview != null){
+            lrcview = null;
         }
         if (playview != null){
             playview = null;
@@ -387,8 +392,8 @@ public class MusicModel extends BaseModel {
                     if (mainMusicList != null){
                         mainMusicList.onPlayState(isPlaying());
                     }
-                    if (visualizerAblumview != null){
-                        visualizerAblumview.onPlayState(isPlaying(),getCurrentPosition(),getDuration());
+                    if (lrcview != null){
+                        lrcview.onPlayState(isPlaying(),getCurrentPosition(),getDuration());
                     }
                     break;
                 case 0x03: //快速更新
@@ -406,24 +411,24 @@ public class MusicModel extends BaseModel {
                         if (mainMusicList != null){
                             mainMusicList.onCurrPlayMedia(CurrPlayMediaList.get(CurrPlayListTagPosition));
                         }
-                        if (visualizerAblumview != null){
-                            visualizerAblumview.onCurrPlayMedia(CurrPlayMediaList.get(CurrPlayListTagPosition));
+                        if (lrcview != null){
+                            lrcview.onCurrPlayMedia(CurrPlayMediaList.get(CurrPlayListTagPosition));
                         }
                         if (playview != null){
                             playview.onCurrPlayMedia(CurrPlayMediaList.get(CurrPlayListTagPosition));
                             playview.onPlayList(CurrPlayMediaList);
                         }
-                        if (mainMusicList != null){
-                            mainMusicList.onMediaList(FastALLMusicList);
-                        }
+                    }
+                    if (mainMusicList != null){
+                        mainMusicList.onMediaList(FastALLMusicList);
                     }
                     for (MusicView.FristMusicList view : fristMusicLists){
                         view.onMediaList(ALLMusicList,ArtistLists,AlbumLists,PathLists);
                     }
                     if (secondview != null){
                         if (CurrPlayListTag == 3){
-                                secondMedias = FastPathLists.get(showPostion).getPathMediaList();
-                                secondTitle = FastPathLists.get(showPostion).getName();
+                            secondMedias = FastPathLists.get(showPostion).getPathMediaList();
+                            secondTitle = FastPathLists.get(showPostion).getName();
                         }
                         secondview.onShowMusicListMedias(secondMedias,secondTitle,CurrPlayMedia,CurrPlayListTag == SecondTag);
                     }
@@ -476,7 +481,8 @@ public class MusicModel extends BaseModel {
 
     /**清空播放列表*/
     public void setClearCurrPlayMediaList(){
-        CurrPlayMediaList.clear();
+        CurrPlayMediaList = new ArrayList<>();
+        CurrPlayListTagPosition = -1;
     }
 
     /**
@@ -517,9 +523,12 @@ public class MusicModel extends BaseModel {
         if (playview != null){
             playview.onCurrPlayMedia(CurrPlayMedia);
         }
-        if (visualizerAblumview != null){
-            visualizerAblumview.onCurrPlayMedia(CurrPlayMedia);
-            visualizerAblumview.onMediaPlay(getMediaPlayer());
+        if (lrcview != null){
+            lrcview.onCurrPlayMedia(CurrPlayMedia);
+        }
+        if (playview != null){
+            playview.onCurrPlayMedia(CurrPlayMedia);
+            playview.onMediaPlay(getMediaPlayer());
         }
         if (mainMusicList != null){
             mainMusicList.onCurrPlayMedia(CurrPlayMedia);
@@ -569,7 +578,7 @@ public class MusicModel extends BaseModel {
             if (focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT) {
                 pause();
             } else if (focusChange == AudioManager.AUDIOFOCUS_GAIN) {
-                start();
+                //start();
             } else if (focusChange == AudioManager.AUDIOFOCUS_LOSS) {
                 stop();
             } else if (focusChange == AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK) {
@@ -741,6 +750,17 @@ public class MusicModel extends BaseModel {
                 NextPosition = r.nextInt(CurrPlayMediaList.size());
                 NextPlayMedia = CurrPlayMediaList.get(NextPosition);
                 break;
+        }
+    }
+
+    /*刷新请求*/
+    public void onRefreshrequest(){
+        if (PermissionsReady){
+            FastLoadType = 1;
+            GetFastData(PathStorage,true);
+            mainMusicList.success();
+            handler.sendEmptyMessage(0x03);
+            FastLoadType = 2;
         }
     }
 }

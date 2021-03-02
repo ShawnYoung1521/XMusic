@@ -29,7 +29,6 @@ dependencies {
     //noinspection GradleCompatible
     implementation 'com.android.support:design:27.1.1'
     implementation project(path: ':library_media')
-    implementation project(path: ':library_swipeback')
     implementation project(path: ':library_lrc')
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
@@ -37,5 +36,6 @@ dependencies {
     implementation project(path: ':library_spectrum')
     implementation 'com.gyf.immersionbar:immersionbar:3.0.0'
     implementation 'com.gyf.immersionbar:immersionbar-components:3.0.0'
-    implementation 'com.github.itemuse:XLib:1.0'
+    implementation 'com.github.itemuse:xlib:1.0'
+    implementation 'com.billy.android:smart-swipe:1.1.2'
 }

@@ -27,6 +27,9 @@ public class MainPresenter extends BasePresenter<MusicView.MainMusicList, MusicM
     public void onLoadData(){
         mModel.onLoadFastData();
     }
+    public void onRefreshrequest(){
+        mModel.onRefreshrequest();
+    }
 
     public void onGrantedPermissions(){
         mModel.setGrantedPermissions();
@@ -57,6 +60,16 @@ public class MainPresenter extends BasePresenter<MusicView.MainMusicList, MusicM
     @Override
     public void onMediaList(ArrayList<LMedia> ALLMusicList) {
         get().onMediaList(ALLMusicList);
+    }
+
+    @Override
+    public void success() {
+        get().success();
+    }
+
+    @Override
+    public void failed() {
+        get().failed();
     }
 
     public void next() {

@@ -18,6 +18,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.billy.android.swipe.SmartSwipe;
+import com.billy.android.swipe.SmartSwipeRefresh;
+import com.billy.android.swipe.consumer.StretchConsumer;
 import com.gyf.immersionbar.ImmersionBar;
 import com.tw.music.contract.MusicContract;
 import com.tw.music.fragment.TabListArtistFM;
@@ -33,16 +37,20 @@ import com.xy.media_lib.presenter.MainPresenter;
 import com.xy.media_lib.view.MusicView;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.security.auth.callback.Callback;
+
 import cn.xy.library.XApp;
 import cn.xy.library.util.convert.XConvert;
 import cn.xy.library.util.fragment.XFragment;
+import cn.xy.library.util.log.XLog;
 import cn.xy.library.util.permissions.XPermission;
 import cn.xy.library.util.screen.XScreen;
 import cn.xy.library.util.service.XService;
 import cn.xy.library.util.spannable.XSpanned;
 import cn.xy.library.util.tab.XTab;
 
-public class MusicActivity extends MAppCompatActivity<MainPresenter> implements MusicView.MainMusicList, onFragmentListener {
+public class MusicActivity extends MAppCompatActivity<MainPresenter> implements MusicView.MainMusicList,onFragmentListener {
     private FragmentManager fm;
     private CircleImageView playview_bottom_icon;
     private TextView playview_bottom_music_info;
@@ -63,10 +71,10 @@ public class MusicActivity extends MAppCompatActivity<MainPresenter> implements 
         initFragment();
         initData();
         initpermissions();
+//        mPresenter.onRefreshrequest();
         mPresenter.onCreate();
         mPresenter.onLoadData();
     }
-
     private boolean PermissionsReady = false;
     private void initpermissions() {
         if (!XPermission.isGranted(MusicContract.FileReadPermissions)){
@@ -207,13 +215,22 @@ public class MusicActivity extends MAppCompatActivity<MainPresenter> implements 
         main_wait_pb.setVisibility(View.GONE);
     }
 
+    @Override
+    public void success() {
+    }
+
+    @Override
+    public void failed() {
+
+    }
+
     public void onPlaylistClick(View view){
         switch (view.getId()){
             case R.id.playview_bottom_icon:
             case R.id.playview_bottom_music_info:
                 Intent intent = new Intent();
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.setClass(this, MusicPlayViewActivity.class);
+                intent.setClass(this, PlayViewActivity.class);
                 startActivity(intent);
                 break;
             case R.id.playview_bottom_prev:

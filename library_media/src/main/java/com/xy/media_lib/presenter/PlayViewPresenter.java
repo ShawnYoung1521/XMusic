@@ -1,6 +1,8 @@
 package com.xy.media_lib.presenter;
 
 import android.content.Context;
+import android.media.MediaPlayer;
+
 import com.xy.media_lib.bean.LMedia;
 import com.xy.media_lib.model.MusicModel;
 import com.xy.media_lib.view.MusicView;
@@ -16,8 +18,8 @@ public class PlayViewPresenter extends BasePresenter<MusicView.PlayView, MusicMo
         return MusicModel.getInstant();
     }
 
-    public void onCreate(){
-        mModel.BindPlayView(this);
+    public void onCreate(MusicView.PlayView context){
+        mModel.BindPlayView(context);
     }
 
     public void onResume() {
@@ -46,6 +48,11 @@ public class PlayViewPresenter extends BasePresenter<MusicView.PlayView, MusicMo
     @Override
     public void onPlayList(ArrayList<LMedia> MusicList) {
         get().onPlayList(MusicList);
+    }
+
+    @Override
+    public void onMediaPlay(MediaPlayer mediaPlayer) {
+        get().onMediaPlay(mediaPlayer);
     }
 
     public void setClickInPlayViewList(int tag,int pos){

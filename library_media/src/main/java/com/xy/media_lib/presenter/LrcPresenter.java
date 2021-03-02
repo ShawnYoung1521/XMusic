@@ -7,9 +7,9 @@ import com.xy.media_lib.bean.LMedia;
 import com.xy.media_lib.model.MusicModel;
 import com.xy.media_lib.view.MusicView;
 
-public class VisualizerAblumPresenter extends BasePresenter<MusicView.VisualizerAblum, MusicModel> implements MusicView.VisualizerAblum {
+public class LrcPresenter extends BasePresenter<MusicView.LrcAblum, MusicModel> implements MusicView.LrcAblum {
 
-    public VisualizerAblumPresenter(Context context) {
+    public LrcPresenter(Context context) {
         super(context);
     }
 
@@ -35,11 +35,6 @@ public class VisualizerAblumPresenter extends BasePresenter<MusicView.Visualizer
     @Override
     public void onPlayState(boolean isPlaying, int CurrentPosition, int Duration) {
         get().onPlayState(isPlaying,CurrentPosition,Duration);
-    }
-
-    @Override
-    public void onMediaPlay(MediaPlayer mediaPlayer) {
-        get().onMediaPlay(mediaPlayer);
     }
 
     public void seekTo(int pos) {
