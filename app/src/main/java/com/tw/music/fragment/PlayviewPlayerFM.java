@@ -211,6 +211,7 @@ public class PlayviewPlayerFM extends MV4Fragment<PlayViewPresenter> implements 
         PopupWindow popRdsWindow = new PopupWindow(playlistview, ViewGroup.LayoutParams.MATCH_PARENT,XConvert.dp2px(300));
         popRdsWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         popRdsWindow.setOutsideTouchable(true);
+        popRdsWindow.setFocusable(true);
         popRdsWindow.setAnimationStyle(R.style.pop_window_anim);
         popRdsWindow.showAsDropDown(view, 0, 0);
     }
