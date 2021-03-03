@@ -7,6 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
+
+import com.billy.android.swipe.SmartSwipeRefresh;
 import com.tw.music.MusicActivity;
 import com.tw.music.R;
 import com.tw.music.adapter.MusicPathAdapter;
@@ -24,15 +27,15 @@ import cn.xy.library.XApp;
 import cn.xy.library.util.log.XLog;
 
 @SuppressLint("ValidFragment")
-public class TabListPathFM extends MV4Fragment<FristListPresenter> implements MusicView.FristMusicList, AdapterView.OnItemClickListener {
+public class TabListPathFM extends MV4Fragment<FristListPresenter> implements MusicView.FristMusicList, AdapterView.OnItemClickListener{
     private MusicPathAdapter musicpathAdapter;
     private onFragmentListener fragmentListener;
     private ListView Main_lv;
+    private TextView nofile_notif;
 
     public TabListPathFM(MusicActivity musicActivity) {
         fragmentListener = musicActivity;
     }
-
 
     @Override
     public void onViewCreated(View v, Bundle savedInstanceState) {
@@ -53,6 +56,7 @@ public class TabListPathFM extends MV4Fragment<FristListPresenter> implements Mu
     }
 
     private void initData(View v) {
+        nofile_notif = v.findViewById(R.id.nofile_notif);
         Main_lv = v.findViewById(R.id.main_listview);
         Main_lv.setOnItemClickListener(this);
         musicpathAdapter = new MusicPathAdapter();
@@ -81,6 +85,7 @@ public class TabListPathFM extends MV4Fragment<FristListPresenter> implements Mu
 
     @Override
     public void onMediaList(ArrayList<LMedia> ALLMusicList, ArrayList<ArtistMedia> ArtistLists, ArrayList<AlbumMedia> AlbumLists, ArrayList<PathMedia> PathLists) {
+        nofile_notif.setVisibility((PathLists.size()>0)?View.GONE:View.VISIBLE);
         musicpathAdapter.notifyDataSetChanged(PathLists);
         Main_lv.setAdapter(musicpathAdapter);
     }

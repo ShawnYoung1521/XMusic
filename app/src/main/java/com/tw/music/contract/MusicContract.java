@@ -30,5 +30,7 @@ public class MusicContract {
     public static int SecondTag = 5;
 
 
-
+    public final static int REFRESH_REQUEST = 0xf000;
+    public final static int REFRESH_SUCCESS = 0xf001;
+    public final static int REFRESH_FAILED  = 0xf002;
 }

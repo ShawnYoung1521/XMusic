@@ -32,6 +32,8 @@
         </activity>
         <activity android:name=".PlayViewActivity"
             android:launchMode="singleTask"/>
+        <activity android:name=".MusicListSecondActivity"
+            android:launchMode="singleTask"/>
         <service android:name=".MusicService"
             android:persistent="true"
             android:priority="1000" />

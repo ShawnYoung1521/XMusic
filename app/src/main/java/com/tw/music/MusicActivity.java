@@ -1,5 +1,6 @@
 package com.tw.music;
 
+import android.annotation.SuppressLint;
 import android.app.FragmentManager;
 import android.app.Service;
 import android.content.ComponentName;
@@ -9,6 +10,8 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.Message;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -18,16 +21,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
-import com.billy.android.swipe.SmartSwipe;
 import com.billy.android.swipe.SmartSwipeRefresh;
-import com.billy.android.swipe.consumer.StretchConsumer;
 import com.gyf.immersionbar.ImmersionBar;
 import com.tw.music.contract.MusicContract;
 import com.tw.music.fragment.TabListArtistFM;
 import com.tw.music.fragment.TabListAlbumFM;
 import com.tw.music.fragment.TabListPathFM;
-import com.tw.music.fragment.SecondaryFragment;
 import com.tw.music.fragment.TabListAllMusicFM;
 import com.tw.music.widget.CircleImageView;
 import com.tw.music.listener.onFragmentListener;
@@ -37,20 +36,19 @@ import com.xy.media_lib.presenter.MainPresenter;
 import com.xy.media_lib.view.MusicView;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.security.auth.callback.Callback;
-
 import cn.xy.library.XApp;
 import cn.xy.library.util.convert.XConvert;
 import cn.xy.library.util.fragment.XFragment;
-import cn.xy.library.util.log.XLog;
 import cn.xy.library.util.permissions.XPermission;
 import cn.xy.library.util.screen.XScreen;
 import cn.xy.library.util.service.XService;
 import cn.xy.library.util.spannable.XSpanned;
 import cn.xy.library.util.tab.XTab;
+import static com.tw.music.contract.MusicContract.REFRESH_FAILED;
+import static com.tw.music.contract.MusicContract.REFRESH_REQUEST;
+import static com.tw.music.contract.MusicContract.REFRESH_SUCCESS;
 
-public class MusicActivity extends MAppCompatActivity<MainPresenter> implements MusicView.MainMusicList,onFragmentListener {
+public class MusicActivity extends MAppCompatActivity<MainPresenter> implements MusicView.MainMusicList,onFragmentListener,SmartSwipeRefresh.SmartSwipeRefreshDataLoader {
     private FragmentManager fm;
     private CircleImageView playview_bottom_icon;
     private TextView playview_bottom_music_info;
@@ -71,10 +69,11 @@ public class MusicActivity extends MAppCompatActivity<MainPresenter> implements 
         initFragment();
         initData();
         initpermissions();
-//        mPresenter.onRefreshrequest();
         mPresenter.onCreate();
         mPresenter.onLoadData();
     }
+    SmartSwipeRefresh mSmartSwipeRefresh;
+
     private boolean PermissionsReady = false;
     private void initpermissions() {
         if (!XPermission.isGranted(MusicContract.FileReadPermissions)){
@@ -122,6 +121,7 @@ public class MusicActivity extends MAppCompatActivity<MainPresenter> implements 
         lp.height=XConvert.dp2px(XScreen.isLandscape()?85:50);
         playview_bottom_tab.setLayoutParams(lp);
         findViewById(R.id.playview_bottom_prev).setVisibility(XScreen.isLandscape()?View.VISIBLE:View.GONE);
+        SmartSwipeRefresh.behindMode(findViewById(R.id.allplayview_midd_vp), false).setNoMoreData(true).disableLoadMore().setDataLoader(this);
     }
 
 
@@ -217,12 +217,36 @@ public class MusicActivity extends MAppCompatActivity<MainPresenter> implements 
 
     @Override
     public void success() {
+        mHandler.sendEmptyMessage(REFRESH_SUCCESS);
     }
 
     @Override
     public void failed() {
-
+        mHandler.sendEmptyMessage(REFRESH_FAILED);
     }
+
+    @SuppressLint("HandlerLeak")
+    private Handler mHandler = new Handler(){
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what){
+                case REFRESH_REQUEST:
+                    mPresenter.onRefreshrequest();
+                    break;
+                case REFRESH_SUCCESS:
+                    if (mSmartSwipeRefresh != null)
+                    mSmartSwipeRefresh.finished(true);
+                    break;
+                case REFRESH_FAILED:
+                    if (mSmartSwipeRefresh != null)
+                    mSmartSwipeRefresh.finished(false);
+                    break;
+                default:
+                    throw new IllegalStateException("Unexpected value: " + msg.what);
+            }
+        }
+    };
 
     public void onPlaylistClick(View view){
         switch (view.getId()){
@@ -247,12 +271,19 @@ public class MusicActivity extends MAppCompatActivity<MainPresenter> implements 
 
     @Override
     public void toSecond() {
-        XFragment.addFragmentToBackStack(fm,new SecondaryFragment(),R.id.main_frame_layout);
+        Intent intent = new Intent();
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setClass(this, MusicListSecondActivity.class);
+        startActivity(intent);
     }
 
-    public void popFragmentFromBackStack(){
-        mPresenter.onResume();
-        fm.popBackStack();
-        fm.executePendingTransactions();
+    @Override
+    public void onRefresh(SmartSwipeRefresh ssr) {
+        mHandler.sendEmptyMessage(REFRESH_REQUEST);
+        mSmartSwipeRefresh = ssr;
+    }
+
+    @Override
+    public void onLoadMore(SmartSwipeRefresh ssr) {
     }
 }

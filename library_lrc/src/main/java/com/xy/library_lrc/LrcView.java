@@ -431,7 +431,7 @@ public class LrcView extends View {
         if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL) {
             isTouching = false;
             if (hasLrc() && !isFling) {
-                adjustCenter();
+//                adjustCenter();
                 postDelayed(hideTimelineRunnable, TIMELINE_KEEP_TIME);
             }
         }

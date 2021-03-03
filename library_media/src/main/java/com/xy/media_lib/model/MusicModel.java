@@ -89,10 +89,28 @@ public class MusicModel extends BaseModel {
                     FastPathLists = PathLists;
                     LoadAllType = 2;
                     handler.sendEmptyMessage(0x04);
+                    isRefreshing = false;
+                    mainMusicList.success();
                 }
             }
         }).start();
     }
+
+    private boolean isRefreshing = false;
+    /*刷新请求*/
+    public void onRefreshrequest(){
+        if (PermissionsReady && !isRefreshing && LoadAllType == 2){
+            isRefreshing = true;
+            FastLoadType = 0;
+            LoadAllType = 0;
+            onLoadFastData();
+            handler.sendEmptyMessage(0x03);
+            onLoadAllData();
+        }else {
+            mainMusicList.failed();
+        }
+    }
+
 
     /**列表Fragment准备就绪
      * 取数据**/
@@ -433,6 +451,9 @@ public class MusicModel extends BaseModel {
                         secondview.onShowMusicListMedias(secondMedias,secondTitle,CurrPlayMedia,CurrPlayListTag == SecondTag);
                     }
                     break;
+                case 0x05:
+
+                    break;
             }
         }
     }
@@ -750,17 +771,6 @@ public class MusicModel extends BaseModel {
                 NextPosition = r.nextInt(CurrPlayMediaList.size());
                 NextPlayMedia = CurrPlayMediaList.get(NextPosition);
                 break;
-        }
-    }
-
-    /*刷新请求*/
-    public void onRefreshrequest(){
-        if (PermissionsReady){
-            FastLoadType = 1;
-            GetFastData(PathStorage,true);
-            mainMusicList.success();
-            handler.sendEmptyMessage(0x03);
-            FastLoadType = 2;
         }
     }
 }

@@ -84,12 +84,6 @@ public class PlayviewPlayerFM extends MV4Fragment<PlayViewPresenter> implements 
         return v;
     }
 
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-        XLog.i(hidden);
-    }
-
     private void initData(View v) {
 
         playview_view_layout = v.findViewById(R.id.playview_view_layout);

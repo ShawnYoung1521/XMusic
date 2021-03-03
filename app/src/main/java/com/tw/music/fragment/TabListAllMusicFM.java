@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
+
 import com.tw.music.R;
 import com.tw.music.adapter.AllMusicAdapter;
 import com.tw.music.contract.MusicContract;
@@ -26,6 +28,7 @@ public class TabListAllMusicFM extends MV4Fragment<FristListPresenter> implement
 
     private AllMusicAdapter allMusicAdapter;
     private ListView Main_lv;
+    private TextView nofile_notif;
 
     @Override
     public void onViewCreated(View v, Bundle savedInstanceState) {
@@ -46,6 +49,7 @@ public class TabListAllMusicFM extends MV4Fragment<FristListPresenter> implement
     }
 
     private void initData(View v) {
+        nofile_notif = v.findViewById(R.id.nofile_notif);
         Main_lv = v.findViewById(R.id.main_listview);
         Main_lv.setOnItemClickListener(this);
         allMusicAdapter = new AllMusicAdapter();
@@ -75,6 +79,7 @@ public class TabListAllMusicFM extends MV4Fragment<FristListPresenter> implement
 
     @Override
     public void onMediaList(ArrayList<LMedia> ALLMusicList, ArrayList<ArtistMedia> ArtistLists, ArrayList<AlbumMedia> AlbumLists, ArrayList<PathMedia> PathLists) {
+        nofile_notif.setVisibility((PathLists.size()>0)?View.GONE:View.VISIBLE);
         allMusicAdapter.notifyDataSetChanged(ALLMusicList);
         Main_lv.setAdapter(allMusicAdapter);
     }
