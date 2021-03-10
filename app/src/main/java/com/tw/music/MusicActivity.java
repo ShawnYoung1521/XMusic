@@ -58,6 +58,7 @@ public class MusicActivity extends MAppCompatActivity<MainPresenter> implements 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initpermissions();
         ImmersionBar.with(this)
                 .statusBarDarkFont(true)
                 .statusBarColor(R.color.white)
@@ -68,7 +69,6 @@ public class MusicActivity extends MAppCompatActivity<MainPresenter> implements 
         fm = getFragmentManager();
         initFragment();
         initData();
-        initpermissions();
         mPresenter.onCreate();
         mPresenter.onLoadData();
     }

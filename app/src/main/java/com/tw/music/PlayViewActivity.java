@@ -10,17 +10,20 @@ import android.support.v7.app.AppCompatActivity;
 import com.billy.android.swipe.SmartSwipe;
 import com.billy.android.swipe.consumer.ActivitySlidingBackConsumer;
 import com.gyf.immersionbar.ImmersionBar;
+import com.tw.music.contract.MusicContract;
 import com.tw.music.fragment.PlayviewLrcFM;
 import com.tw.music.fragment.PlayviewPlayerFM;
 import com.tw.music.listener.onFragmentListener;
 import java.util.ArrayList;
 import java.util.List;
+import cn.xy.library.util.permissions.XPermission;
 import cn.xy.library.util.tab.XTab;
 
 public class PlayViewActivity extends AppCompatActivity implements onFragmentListener {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initpermissions();
         ImmersionBar.with(this)
                 .statusBarColor(R.color.black)
                 .fitsSystemWindows(true).init();
@@ -33,6 +36,18 @@ public class PlayViewActivity extends AppCompatActivity implements onFragmentLis
         ;
         setContentView(R.layout.main_playview_layout);
         initFragment();
+    }
+
+    private void initpermissions() {
+        if (!XPermission.isGranted(MusicContract.RecordPermissions)){
+            XPermission.permissionGroup(MusicContract.RecordPermissions).callback(new XPermission.SimpleCallback() {
+                @Override
+                public void onGranted() {}
+
+                @Override
+                public void onDenied() {}
+            }).request();
+        }
     }
 
     private List<Fragment> mFragment;
