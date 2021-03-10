@@ -48,7 +48,18 @@ public class PlayViewActivity extends AppCompatActivity implements onFragmentLis
         mTitle = new ArrayList<>();
         mTitle.add("歌曲");
         mTitle.add("歌词");
-        XTab.addTab(mTabLayout,mViewPager,mFragment,mTitle,getSupportFragmentManager());
+        XTab.addTab(mTabLayout,
+                mViewPager,
+                mFragment,
+                mTitle,
+                getSupportFragmentManager(),
+                1,
+                new XTab.onPageSelected() {
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+        });
     }
 
     @Override

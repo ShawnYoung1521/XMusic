@@ -142,7 +142,18 @@ public class MusicActivity extends MAppCompatActivity<MainPresenter> implements 
         mTitle.add("歌手");
         mTitle.add("专辑");
         mTitle.add("文件夹");
-        XTab.addTab(mTabLayout,mViewPager,mFragment,mTitle,getSupportFragmentManager());
+        XTab.addTab(mTabLayout,
+                mViewPager,
+                mFragment,
+                mTitle,
+                getSupportFragmentManager(),
+                2,
+                new XTab.onPageSelected() {
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+        });
     }
 
     private ServiceConnection mConnection = new ServiceConnection() {

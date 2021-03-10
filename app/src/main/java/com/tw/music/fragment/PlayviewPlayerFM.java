@@ -18,9 +18,6 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.SeekBar;
 import android.widget.TextView;
-
-import com.billy.android.swipe.SmartSwipe;
-import com.billy.android.swipe.consumer.ActivitySlidingBackConsumer;
 import com.tw.music.PlayViewActivity;
 import com.tw.music.R;
 import com.tw.music.adapter.PlayListMusicAdapter;
@@ -272,16 +269,16 @@ public class PlayviewPlayerFM extends MV4Fragment<PlayViewPresenter> implements 
             visualizer = null;
         }
         int mediaPlayerId = player.getAudioSessionId();
-        if (visualizer == null) {
-            visualizer = new Visualizer(mediaPlayerId);
-            visualizer.setEnabled(false);
-        } else {
-            visualizer.release();
-        }
-        int captureSize = Visualizer.getCaptureSizeRange()[0];
-        int captureRate = Visualizer.getMaxCaptureRate() * 3 / 4;
-
+        XLog.i(mediaPlayerId);
         try{
+            if (visualizer == null) {
+                visualizer = new Visualizer(mediaPlayerId);
+                visualizer.setEnabled(false);
+            } else {
+                visualizer.release();
+            }
+            int captureSize = Visualizer.getCaptureSizeRange()[0];
+            int captureRate = Visualizer.getMaxCaptureRate() * 3 / 4;
             visualizer.setCaptureSize(captureSize);
             visualizer.setDataCaptureListener(dataCaptureListener, captureRate, true, true);
             visualizer.setScalingMode(Visualizer.SCALING_MODE_NORMALIZED);
