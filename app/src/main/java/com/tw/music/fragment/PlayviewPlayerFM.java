@@ -3,6 +3,7 @@ package com.tw.music.fragment;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
@@ -34,6 +35,7 @@ import cn.xy.library.util.convert.XConvert;
 import cn.xy.library.util.image.XImage;
 import cn.xy.library.util.log.XLog;
 import cn.xy.library.util.screen.XScreen;
+import cn.xy.library.util.sharedpreferences.XSPUtils;
 import cn.xy.library.util.spannable.XSpanned;
 import cn.xy.spectrum.AppConstant;
 import cn.xy.spectrum.view.AiVoiceView;
@@ -67,7 +69,9 @@ public class PlayviewPlayerFM extends MV4Fragment<PlayViewPresenter> implements 
     public PlayviewPlayerFM(PlayViewActivity playViewActivity) {
         fragmentListener = playViewActivity;
     }
-
+    public PlayviewPlayerFM() {
+        // doesn't do anything special
+    }
     @Override
     public void onViewCreated(View v, Bundle savedInstanceState) {
         super.onViewCreated(v, savedInstanceState);
@@ -82,7 +86,6 @@ public class PlayviewPlayerFM extends MV4Fragment<PlayViewPresenter> implements 
     }
 
     private void initData(View v) {
-
         playview_view_layout = v.findViewById(R.id.playview_view_layout);
         allplayview_bottom_pp = v.findViewById(R.id.allplayview_bottom_pp);
         allplayview_bottom_mode = v.findViewById(R.id.allplayview_bottom_mode);
@@ -254,6 +257,7 @@ public class PlayviewPlayerFM extends MV4Fragment<PlayViewPresenter> implements 
     private Visualizer visualizer;
     public MediaPlayer player;
 
+    private static final String AUDIO_SESSION_ID = "com.intent.action.SEND_AUDIO_SESSION_ID";
     @Override
     public void onMediaPlay(MediaPlayer mPlayer) {
         player = mPlayer;
@@ -268,7 +272,14 @@ public class PlayviewPlayerFM extends MV4Fragment<PlayViewPresenter> implements 
         if(visualizer != null){
             visualizer = null;
         }
+
         int mediaPlayerId = player.getAudioSessionId();
+        Intent it = new Intent();
+        it.setAction(AUDIO_SESSION_ID);
+        it.putExtra("id", mediaPlayerId);
+        getActivity().sendBroadcast(it);
+
+        XSPUtils.getInstance().put(AUDIO_SESSION_ID,mediaPlayerId);
         XLog.i(mediaPlayerId);
         try{
             if (visualizer == null) {

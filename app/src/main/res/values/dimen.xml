@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="line_graphic_width">580dp</dimen>
+    <dimen name="seek_thumb_offset">15dp</dimen>
+    <dimen name="seek_thumb_offset_mode">8dp</dimen>
+    <dimen name="seek_padingLeft">1dp</dimen>
+    <dimen name="seek_padingRidht">8dp</dimen>
+    <dimen name="seek_padingTop">0dp</dimen>
+    <dimen name="seek_padingButtom">5dp</dimen>
+    <dimen name="seek_width">47dp</dimen>
+    <dimen name="seek_height">243dp</dimen>
+    <dimen name="seek_width_eq">46dp</dimen>
+    <dimen name="seek_height_eq">220dp</dimen>
+    <dimen name="seek_marginLeft_normal">40dp</dimen>
+    <dimen name="seek_marginLeft_profession">0dp</dimen>
+    <dimen name="seek_marginLeft_port">0dp</dimen>
+    <dimen name="seek_marginLeft_zone">20dp</dimen>
+    <dimen name="dasboard_marginLeft_soundpool">80dp</dimen>
+</resources>

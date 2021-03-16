@@ -11,4 +11,22 @@
         <item name="android:windowEnterAnimation">@anim/pop_fade_in</item>
         <item name="android:windowExitAnimation">@anim/pop_fade_out</item>
     </style>
+
+    <declare-styleable name="DashboardScaleView">
+        <attr name="angle" format="integer" />
+        <attr name="minAngle" format="integer" />
+        <attr name="maxAngle" format="integer" />
+        <attr name="dashboardType">
+            <enum name="fl" value="0" />
+            <enum name="fr" value="1" />
+            <enum name="rl" value="2" />
+            <enum name="rr" value="3" />
+            <enum name="sound_1" value="4" />
+            <enum name="sound_2" value="5" />
+            <enum name="sound_3" value="6" />
+            <enum name="sound_4" value="7" />
+            <enum name="sound_5" value="8" />
+            <enum name="sound_6" value="9" />
+        </attr>
+    </declare-styleable>
 </resources>

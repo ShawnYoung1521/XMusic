@@ -36,6 +36,9 @@ public class TabListArtistFM extends MV4Fragment<FristListPresenter> implements 
         fragmentListener = musicActivity;
     }
 
+    public TabListArtistFM() {
+    }
+
 
     @Override
     public void onViewCreated(View v, Bundle savedInstanceState) {

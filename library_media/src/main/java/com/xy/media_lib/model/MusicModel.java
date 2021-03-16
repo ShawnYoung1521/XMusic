@@ -1,11 +1,15 @@
 package com.xy.media_lib.model;
 
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.Settings;
+
 import com.xy.media_lib.bean.AlbumMedia;
 import com.xy.media_lib.bean.ArtistMedia;
 import com.xy.media_lib.bean.LMedia;
@@ -19,11 +23,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import cn.xy.library.XApp;
-import cn.xy.library.util.log.XLog;
 
 public class MusicModel extends BaseModel {
 
-    public static String PathStorage = "/storage/emulated/0/Music/";
+    public static String PathStorage = "/storage/emulated/0/Music";
     public static String PathUsb1 = "/usb1/";
     public static String PathUsb2 = "/usb2/";
     public static String PathExtsd1 = "/extsd/";
@@ -272,6 +275,7 @@ public class MusicModel extends BaseModel {
         PathLists = (ArrayList<PathMedia>)AllListData.get(3);
     }
 
+    private static final String AUDIO_SESSION_ID = "com.intent.action.SEND_AUDIO_SESSION_ID";
     public MediaPlayer getMediaPlayer(){
         if (mMediaPlayer == null){
             mMediaPlayer = new MediaPlayer();

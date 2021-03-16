@@ -11,6 +11,7 @@ import com.billy.android.swipe.SmartSwipe;
 import com.billy.android.swipe.consumer.ActivitySlidingBackConsumer;
 import com.gyf.immersionbar.ImmersionBar;
 import com.tw.music.contract.MusicContract;
+import com.tw.music.fragment.PlayviewEQFM;
 import com.tw.music.fragment.PlayviewLrcFM;
 import com.tw.music.fragment.PlayviewPlayerFM;
 import com.tw.music.listener.onFragmentListener;
@@ -60,15 +61,17 @@ public class PlayViewActivity extends AppCompatActivity implements onFragmentLis
         mFragment = new ArrayList<>();
         mFragment.add(new PlayviewPlayerFM(this));
         mFragment.add(new PlayviewLrcFM());
+        mFragment.add(new PlayviewEQFM());
         mTitle = new ArrayList<>();
         mTitle.add("歌曲");
         mTitle.add("歌词");
+        mTitle.add("音效");
         XTab.addTab(mTabLayout,
                 mViewPager,
                 mFragment,
                 mTitle,
                 getSupportFragmentManager(),
-                1,
+                2,
                 new XTab.onPageSelected() {
             @Override
             public void onPageSelected(int position) {

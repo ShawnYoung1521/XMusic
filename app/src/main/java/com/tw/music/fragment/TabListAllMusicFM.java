@@ -29,7 +29,9 @@ public class TabListAllMusicFM extends MV4Fragment<FristListPresenter> implement
     private AllMusicAdapter allMusicAdapter;
     private ListView Main_lv;
     private TextView nofile_notif;
-
+    public TabListAllMusicFM() {
+        // doesn't do anything special
+    }
     @Override
     public void onViewCreated(View v, Bundle savedInstanceState) {
         super.onViewCreated(v, savedInstanceState);

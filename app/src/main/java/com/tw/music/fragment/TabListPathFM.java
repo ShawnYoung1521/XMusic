@@ -36,6 +36,8 @@ public class TabListPathFM extends MV4Fragment<FristListPresenter> implements Mu
     public TabListPathFM(MusicActivity musicActivity) {
         fragmentListener = musicActivity;
     }
+    public TabListPathFM() {
+    }
 
     @Override
     public void onViewCreated(View v, Bundle savedInstanceState) {

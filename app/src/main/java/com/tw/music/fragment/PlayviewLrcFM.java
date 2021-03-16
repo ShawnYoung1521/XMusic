@@ -28,7 +28,9 @@ public class PlayviewLrcFM extends MV4Fragment<LrcPresenter> implements MusicVie
     public void onViewCreated(View v, Bundle savedInstanceState) {
         super.onViewCreated(v, savedInstanceState);
     }
-
+    public PlayviewLrcFM() {
+        // doesn't do anything special
+    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

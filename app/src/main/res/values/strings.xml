@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">微音</string>
+    <string name="loud">响度</string>
+    <string name="surround_sound">环绕声</string>
+    <string name="surround_space">环绕空间</string>
+    <string name="surround_fl">前左</string>
+    <string name="surround_fr">前右</string>
+    <string name="surround_rl">后左</string>
+    <string name="surround_rr">后右</string>
+    <string name="sound_1">混响强度</string>
+    <string name="sound_2">响度强度</string>
+    <string name="sound_3">后置音量</string>
+    <string name="sound_4">前置音量</string>
+    <string name="defaut">默认值</string>
 </resources>
