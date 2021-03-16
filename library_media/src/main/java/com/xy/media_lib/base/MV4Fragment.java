@@ -13,6 +13,8 @@ public abstract class MV4Fragment<P extends BasePresenter> extends Fragment impl
     protected Context mContext;
     public abstract P createPresenter();
 
+    public MV4Fragment(){}
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
