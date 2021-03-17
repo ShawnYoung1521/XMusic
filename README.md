@@ -1,6 +1,7 @@
 ![](https://github.com/itemuse/XMusic/blob/master/image/image1.jpg)
 ![](https://github.com/itemuse/XMusic/blob/master/image/image2.jpg)
 ![](https://github.com/itemuse/XMusic/blob/master/image/image3.jpg)
+![](https://github.com/itemuse/XMusic/blob/master/image/image3+1.jpg)
 ![](https://github.com/itemuse/XMusic/blob/master/image/image4.jpg)
 ![](https://github.com/itemuse/XMusic/blob/master/image/image5.jpg)
 ![](https://github.com/itemuse/XMusic/blob/master/image/image6.jpg)

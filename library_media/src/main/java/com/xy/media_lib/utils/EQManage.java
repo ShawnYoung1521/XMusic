@@ -1,4 +1,4 @@
-package com.tw.music.utils;
+package com.xy.media_lib.utils;
 
 
 import android.content.Context;
@@ -8,7 +8,6 @@ import android.media.audiofx.LoudnessEnhancer;
 import android.media.audiofx.Virtualizer;
 import android.os.Handler;
 import android.util.Log;
-
 import cn.xy.library.util.log.XLog;
 import cn.xy.library.util.sharedpreferences.XSPUtils;
 
@@ -149,7 +148,7 @@ public class EQManage {
                 }, 10);
                 getUserModeValue();
                 initEnvironmentalReverb(audio_session_id);
-//                initLoudnessEnhancer(audio_session_id);//有问题，影响增益
+                initLoudnessEnhancer(audio_session_id);//有问题，影响增益
                 mHandler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -198,7 +197,6 @@ public class EQManage {
         XLog.i("setEnvironmentalReverb:  "+reverbLevel);
         XSPUtils.getInstance().put(EQ_ENVIRONMENTTAL_REVERB_NAME, reverbLevel);
         reverbLevel = (2000 - reverbLevel * 11000 / 14);
-        Log.i("HYH",(environmentalReverb != null)+"  reverbLevel:  "+reverbLevel);
         if (environmentalReverb != null) {
             environmentalReverb.setReverbLevel((short) reverbLevel);
             if (reverbLevel <= 0) {
@@ -223,6 +221,7 @@ public class EQManage {
         XLog.i("setLoudnessEnhancer:  "+position);
         XSPUtils.getInstance().put(EQ_LOUNDNESS_ENHANCER_NAME, position);
         int gainmB = position * 1000 / 14;
+        XLog.i((loudnessEnhancer != null));
         if (loudnessEnhancer != null) {
             loudnessEnhancer.setTargetGain(gainmB);
         }
@@ -248,7 +247,6 @@ public class EQManage {
                 saveUserModeValue();
             }
             if (mEqualizer != null) {
-                Log.d("HYH","setEqBandLevel:"+((short) (level * 100 + minEQLevel)));
                 mEqualizer.setBandLevel((short) band, (short) (level * 100 + minEQLevel));
             }
         } catch (Exception e) {
@@ -258,7 +256,6 @@ public class EQManage {
 
     /**
      * 模式
-     *
      * @param mode
      */
     public void setEQMode(int mode) {
@@ -270,7 +267,6 @@ public class EQManage {
             try {
                 for (int i = 0; i < 5; i++) {
                     if (mEqualizer != null) {
-                        Log.d("HYH","setEQMode:"+((short) (modeValues[mode][i * 3 + 1] * 100 + minEQLevel)));
                         mEqualizer.setBandLevel((short) i, (short) (modeValues[mode][i * 3 + 1] * 100 + minEQLevel));
                     } else {
                         Log.d(TAG, "error mEqualizer==null");
@@ -357,5 +353,4 @@ public class EQManage {
          */
         void onEQValueChange(int eqMode, int[] values);
     }
-
 }

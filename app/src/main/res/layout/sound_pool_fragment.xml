@@ -9,26 +9,73 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="vertical">
-        <com.tw.music.widget.DashboardScaleView
-            android:id="@+id/dasboard_sound1"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            eq:dashboardType="sound_1">
+            android:orientation="horizontal"
+            android:gravity="center"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+            <com.tw.music.widget.DashboardScaleView
+                android:id="@+id/dasboard_sound1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                eq:dashboardType="sound_1">
 
-            <include layout="@layout/view_dashboard" />
-        </com.tw.music.widget.DashboardScaleView>
+                <include layout="@layout/view_dashboard" />
+            </com.tw.music.widget.DashboardScaleView>
 
-        <com.tw.music.widget.DashboardScaleView
-            android:id="@+id/dasboard_sound2"
-            android:layout_width="wrap_content"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+            <com.tw.music.widget.DashboardScaleView
+                android:id="@+id/dasboard_sound2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                eq:dashboardType="sound_2">
+
+                <include layout="@layout/view_dashboard" />
+            </com.tw.music.widget.DashboardScaleView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+        </LinearLayout>
+
+        <RadioGroup
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            eq:dashboardType="sound_2">
+            android:gravity="center"
+            android:orientation="vertical" >
 
-            <include layout="@layout/view_dashboard" />
-        </com.tw.music.widget.DashboardScaleView>
+            <RadioButton
+                android:id="@+id/btn_ai"
+                style="@style/dsp_btn_style"
+                android:drawableTop="@drawable/btn_ai_l"
+                android:text="智能丽音"
+                />
 
+            <RadioButton
+                android:id="@+id/btn_rs"
+                style="@style/dsp_btn_style"
+                android:drawableTop="@drawable/btn_rs_l"
+                android:text="超重低音"
+                />
+
+            <RadioButton
+                android:id="@+id/btn_zdy"
+                style="@style/dsp_btn_style"
+                android:drawableTop="@drawable/btn_zdy_l"
+                android:text="纯净人声"
+                />
+        </RadioGroup>
         <Button
             android:id="@+id/btn_defaut"
             android:layout_width="wrap_content"

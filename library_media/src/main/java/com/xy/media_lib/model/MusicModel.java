@@ -8,12 +8,15 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Handler;
 import android.os.Message;
+import android.print.PrinterId;
 import android.provider.Settings;
+import android.util.Log;
 
 import com.xy.media_lib.bean.AlbumMedia;
 import com.xy.media_lib.bean.ArtistMedia;
 import com.xy.media_lib.bean.LMedia;
 import com.xy.media_lib.bean.PathMedia;
+import com.xy.media_lib.utils.EQManage;
 import com.xy.media_lib.utils.LoadMediaFile;
 import com.xy.media_lib.utils.LoadMusicFile;
 import com.xy.media_lib.utils.Utils;
@@ -23,6 +26,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import cn.xy.library.XApp;
+import cn.xy.library.util.log.XLog;
+import cn.xy.library.util.sharedpreferences.XSPUtils;
 
 public class MusicModel extends BaseModel {
 
@@ -155,6 +160,49 @@ public class MusicModel extends BaseModel {
     }
     /*end*/
 
+    /***
+     * EQView
+     */
+    private MusicView.EqView eqView;
+    private int mEnvironmentalReverb = 0;
+    private int mLoundnessEnhancer = 0;
+    private int mEQMode = 0;
+    public void BindEQView(MusicView.EqView View){
+        eqView = View;
+    }
+    public void unBindEQView(){
+        eqView = null;
+    }
+    public void getEQDate(){
+        eqView.onEnvironmentalReverb(mEnvironmentalReverb);
+        eqView.onLoundnessEnhancer(mLoundnessEnhancer);
+        eqView.onEQMode(mEQMode);
+    }
+
+    private static final String EQ_LOUNDNESS_ENHANCER_NAME = "eq_loudnessEnhancer";
+    private static final String EQ_ENVIRONMENTTAL_REVERB_NAME = "eq_environmentttal_reberb";
+    private static final String EQ_MODE_NAME = "eqmode_item";
+    /**
+     * 获取环响
+     */
+    public int getEnvironmentalReverb() {
+        return XSPUtils.getInstance().getInt(EQ_ENVIRONMENTTAL_REVERB_NAME, 14);
+    }
+
+    /**
+     * 获取响度
+     */
+    public int getLoundnessEnhancer() {
+        return XSPUtils.getInstance().getInt(EQ_LOUNDNESS_ENHANCER_NAME, 14);
+    }
+    /**
+     * 获取当前eq模式
+     * @return
+     */
+    public int getEqMode() {
+        return XSPUtils.getInstance().getInt(EQ_MODE_NAME, 0);
+    }
+
     /**
      * SecondMusicList
      */
@@ -199,8 +247,14 @@ public class MusicModel extends BaseModel {
     public void unBindMainMusicListView(){
         mainMusicList = null;
     }
+    private EQManage mEQmanage;
     public void onCreate(){
+        mEnvironmentalReverb = getEnvironmentalReverb();
+        mLoundnessEnhancer = getLoundnessEnhancer();
+        mEQMode =  getEqMode();
+        mEQmanage = EQManage.getInstant(XApp.getApp());
         mMediaPlayer = getMediaPlayer();
+        mEQmanage.InitEQ(mMediaPlayer.getAudioSessionId());
         am = (AudioManager) XApp.getApp().getSystemService(Context.AUDIO_SERVICE);
         handler = new mHandler();
     }
@@ -776,5 +830,23 @@ public class MusicModel extends BaseModel {
                 NextPlayMedia = CurrPlayMediaList.get(NextPosition);
                 break;
         }
+    }
+
+    /**
+     * 设置响度
+     *
+     * @param position
+     */
+    public void setLoudnessEnhancer(int position) {
+        mEQmanage.setLoudnessEnhancer(position);
+    }
+    /**
+     */
+    public void setEnvironmentalReverb(int position) {
+        mEQmanage.setEnvironmentalReverb(position);
+    }
+
+    public void mModel(int mode){
+        mEQmanage.setEQMode(mode);
     }
 }

@@ -1,40 +1,37 @@
 package com.tw.music.fragment;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RadioButton;
+
 import com.tw.music.R;
-import com.tw.music.utils.EQManage;
 import com.tw.music.widget.DashboardScaleView;
+import com.xy.media_lib.base.MV4Fragment;
+import com.xy.media_lib.presenter.EQPresenter;
+import com.xy.media_lib.view.MusicView;
 import cn.xy.library.util.log.XLog;
-import cn.xy.library.util.sharedpreferences.XSPUtils;
 
-public class PlayviewEQFM  extends Fragment implements View.OnClickListener {
+public class PlayviewEQFM extends MV4Fragment<EQPresenter> implements MusicView.EqView,View.OnClickListener {
 
+    private static String TAG="PlayviewEQFM";
     private static final String AUDIO_SESSION_ID = "com.intent.action.SEND_AUDIO_SESSION_ID";
     @Override
     public void onResume() {
         super.onResume();
-        int mediaPlayerId = XSPUtils.getInstance().getInt(AUDIO_SESSION_ID);
-        XLog.i(mediaPlayerId);
-        mEQManage.InitEQ(mediaPlayerId);
+        mPresenter.onResume();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
+        mPresenter.onDestroy();
     }
 
-    private static String TAG="SoundPoolFragment";
     private DashboardScaleView mDasboardSound1;
     private DashboardScaleView mDasboardSound2;
-    private DashboardScaleView mDasboardSound3;
-    private DashboardScaleView mDasboardSound4;
-    private DashboardScaleView mDasboardSound5;
-    private DashboardScaleView mDasboardSound6;
     private Button mBtnDefaut;
 
     View v;
@@ -42,50 +39,32 @@ public class PlayviewEQFM  extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.sound_pool_fragment, null, false);
-        mEQManage = EQManage.getInstant(getActivity());
         initView(v);
         return v;
     }
 
-    public EQManage mEQManage;
+    @Override
+    public EQPresenter createPresenter() {
+        return new EQPresenter(mContext);
+    }
+
     @Override
     public void onViewCreated(View v, Bundle savedInstanceState) {
         super.onViewCreated(v, savedInstanceState);
-        mEQManage.setOnTWCallBack(new EQManage.OnTWCallBack() {
-
-            @Override
-            public void onBassChange(int value) {
-
-            }
-
-            @Override
-            public void onHighChange(int value) {
-
-            }
-
-            @Override
-            public void onLoundChange(int value) {
-
-            }
-
-            @Override
-            public void onZoneChange(int x, int y) {
-
-            }
-
-            @Override
-            public void onNaviMusicVolume(int navi, int music) {
-            }
-        });
+        mPresenter.onCreate(this);
     }
 
     private void initView(View v) {
+        btn_ai_switch = v.findViewById(R.id.btn_ai);
+        btn_ai_switch.setOnClickListener(this);
+        btn_re_switch = v.findViewById(R.id.btn_rs);
+        btn_re_switch.setOnClickListener(this);
+        btn_zdy_switch = v.findViewById(R.id.btn_zdy);
+        btn_zdy_switch.setOnClickListener(this);
         mDasboardSound1 = (DashboardScaleView) v.findViewById(R.id.dasboard_sound1);
         mDasboardSound1.setValueChangeListener(valueChangeListener);
-        mDasboardSound1.setValue(mEQManage.getEnvironmentalReverb(),false);
         mDasboardSound2 = (DashboardScaleView) v.findViewById(R.id.dasboard_sound2);
         mDasboardSound2.setValueChangeListener(valueChangeListener);
-        mDasboardSound2.setValue(mEQManage.getLoundnessEnhancer(),false);
         mBtnDefaut = (Button) v.findViewById(R.id.btn_defaut);
         mBtnDefaut.setOnClickListener(this);
     }
@@ -95,17 +74,11 @@ public class PlayviewEQFM  extends Fragment implements View.OnClickListener {
         public void onValueChanged(DashboardScaleView dashboardView, int dashboardType, int position, boolean fromUser) {
             switch (dashboardType) {
                 case DashboardScaleView.DashboardType.sound_1: {
-                    mEQManage.setEnvironmentalReverb(position);
+                    mPresenter.setEnvironmentalReverb(position);
                     break;
                 }
                 case DashboardScaleView.DashboardType.sound_2: {
-                    mEQManage.setLoudnessEnhancer(position);
-                    break;
-                }
-                case DashboardScaleView.DashboardType.sound_3: {
-                    break;
-                }
-                case DashboardScaleView.DashboardType.sound_4: {
+                    mPresenter.setLoudnessEnhancer(position);
                     break;
                 }
             }
@@ -117,9 +90,56 @@ public class PlayviewEQFM  extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.btn_defaut: {
                 mDasboardSound1.setValue(14,false);
+                mPresenter.setEnvironmentalReverb(14);
                 mDasboardSound2.setValue(14,false);
+                mPresenter.setLoudnessEnhancer(14);
                 break;
             }
+            case R.id.btn_ai:
+                setEQMode(3);
+                break;
+            case R.id.btn_rs:
+                setEQMode(5);
+                break;
+            case R.id.btn_zdy:
+                setEQMode(7);
+                break;
         }
+    }
+
+    private RadioButton btn_ai_switch;
+    private RadioButton btn_re_switch;
+    private RadioButton btn_zdy_switch;
+
+    private void onChangMode(int mEqMode){
+        switch (mEqMode){
+            case 3:
+                btn_ai_switch.setChecked(true);
+                break;
+            case 5:
+                btn_re_switch.setChecked(true);
+                break;
+            case 7:
+                btn_zdy_switch.setChecked(true);
+                break;
+        }
+    }
+    private void setEQMode(int i) {
+        mPresenter.setEQMode(i);
+    }
+
+    @Override
+    public void onEnvironmentalReverb(int volue) {
+        mDasboardSound1.setValue(volue,false);
+    }
+
+    @Override
+    public void onLoundnessEnhancer(int volue) {
+        mDasboardSound2.setValue(volue,false);
+    }
+
+    @Override
+    public void onEQMode(int mdoe) {
+        onChangMode(mdoe);
     }
 }

@@ -57,4 +57,10 @@ public interface MusicView extends BaseView {
         /**用于更新正在播放的音乐的进度/播放状态**/
         void onPlayState(boolean isPlaying,int CurrentPosition,int Duration);
     }
+
+    interface EqView extends  MusicView{
+        void onEnvironmentalReverb(int volue);
+        void onLoundnessEnhancer(int volue);
+        void onEQMode(int mdoe);
+    }
 }

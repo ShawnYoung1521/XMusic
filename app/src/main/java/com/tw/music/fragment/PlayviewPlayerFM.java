@@ -280,7 +280,6 @@ public class PlayviewPlayerFM extends MV4Fragment<PlayViewPresenter> implements 
         getActivity().sendBroadcast(it);
 
         XSPUtils.getInstance().put(AUDIO_SESSION_ID,mediaPlayerId);
-        XLog.i(mediaPlayerId);
         try{
             if (visualizer == null) {
                 visualizer = new Visualizer(mediaPlayerId);
